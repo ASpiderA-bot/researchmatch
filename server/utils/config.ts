@@ -23,8 +23,10 @@ export const CONFIG = {
     .filter(Boolean),
   SEARCH_TIMEOUT_MS: Number(process.env.SEARCH_TIMEOUT_MS || 5000),
   SCRAPE_TIMEOUT_MS: Number(process.env.SCRAPE_TIMEOUT_MS || 4000),
-  MAX_SEARCH_URLS: Number(process.env.MAX_SEARCH_URLS || 8),
-  MAX_RESULTS: Number(process.env.MAX_RESULTS || 24),
+  // Session budget: fewer candidates and pages per run keeps the LLM call
+  // count low enough to stay inside free-tier rate limits. Env still overrides.
+  MAX_SEARCH_URLS: Number(process.env.MAX_SEARCH_URLS || 6),
+  MAX_RESULTS: Number(process.env.MAX_RESULTS || 10),
   REQUEST_TIMEOUT_MS: Number(process.env.REQUEST_TIMEOUT_MS || 30000),
 } as const;
 

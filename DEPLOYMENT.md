@@ -118,7 +118,7 @@ search with no cache, retry, or batching, so 429s silently eat results.
 | 2 | Disk cache for search / scrape / LLM calls (`server/services/cache.ts`) | 45 min |
 | 3 | Exponential backoff on 429 (max 4 attempts) | 30 min |
 | 4 | Auto fallback Gemini ↔ Groq on final rate limit | 25 min |
-| 5 | Shrink per-run budget (`MAX_RESULTS` 24→10, `MAX_SEARCH_URLS` 8→6) | 10 min |
+| 5 | Shrink per-run budget (`MAX_RESULTS` 24→10, `MAX_SEARCH_URLS` 8→6) — **done** | 10 min |
 | 6 | Batch verification, 5 candidates per LLM call | 60 min |
 
 Order of payoff: 2 → 3 → 4 → 5 → 6. Task 1 first because it decides whether the Gemini path works
