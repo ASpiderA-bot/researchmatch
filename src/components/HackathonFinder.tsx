@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Sparkles, Search, Loader2, Monitor, Zap, Filter } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import type { Hackathon, StudentProfile } from "../types";
+import { apiUrl } from "../utils/api";
 import HackathonCard from "./HackathonCard";
 
 interface HackathonFinderProps {
@@ -20,7 +21,7 @@ export default function HackathonFinder({ studentProfile }: HackathonFinderProps
     setError(null);
     setHackathons([]);
     try {
-      const res = await fetch("/api/hackathons", {
+      const res = await fetch(apiUrl("/api/hackathons"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

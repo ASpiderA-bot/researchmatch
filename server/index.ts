@@ -3,6 +3,7 @@ import path from "path";
 import { createServer as createViteServer } from "vite";
 import { CONFIG } from "./utils/config.ts";
 import { AppError, normalizeError, errorResponse } from "./utils/errors.ts";
+import { corsMiddleware } from "./middleware/cors.ts";
 
 import profileRoutes from "./routes/profile.ts";
 import professorRoutes from "./routes/professors.ts";
@@ -11,6 +12,7 @@ import hackathonRoutes from "./routes/hackathons.ts";
 
 const app = express();
 
+app.use(corsMiddleware);
 app.use(express.json({ limit: "25mb" }));
 
 // Health check

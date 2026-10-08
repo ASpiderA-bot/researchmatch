@@ -12,6 +12,15 @@ export const CONFIG = {
   GROQ_MODEL: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
 
   APP_URL: process.env.APP_URL || "http://localhost:3000",
+  // Comma-separated origin allowlist for cross-origin API calls (Pages frontend → this API).
+  // Entries may be full URLs; they are normalized to scheme://host[:port] since
+  // browsers only ever send the Origin header, never a path.
+  CORS_ORIGINS: (
+    process.env.CORS_ORIGIN || "http://localhost:3000,http://localhost:5173"
+  )
+    .split(",")
+    .map((entry) => normalizeOrigin(entry))
+    .filter(Boolean),
   SEARCH_TIMEOUT_MS: Number(process.env.SEARCH_TIMEOUT_MS || 5000),
   SCRAPE_TIMEOUT_MS: Number(process.env.SCRAPE_TIMEOUT_MS || 4000),
   MAX_SEARCH_URLS: Number(process.env.MAX_SEARCH_URLS || 8),
@@ -29,6 +38,16 @@ function cleanKey(key: string | undefined): string {
     cleaned = cleaned.slice(1, -1).trim();
   }
   return cleaned;
+}
+
+function normalizeOrigin(entry: string): string {
+  const trimmed = entry.trim().replace(/\/+$/, "");
+  if (!trimmed) return "";
+  try {
+    return new URL(trimmed).origin;
+  } catch {
+    return trimmed;
+  }
 }
 
 export function validateGeminiKey(): void {

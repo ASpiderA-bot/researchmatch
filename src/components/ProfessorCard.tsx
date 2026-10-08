@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Mail, ExternalLink, Award, Copy, Check, Compass, Landmark, GraduationCap, Zap, ShieldCheck, Send, BookOpen, AlertTriangle } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import type { MatchResult, StudentProfile, ColdEmailResponse } from "../types";
+import { apiUrl } from "../utils/api";
 import EmailComposer from "./EmailComposer";
 
 interface ProfessorCardProps {
@@ -30,7 +31,7 @@ export default function ProfessorCard({ match, studentProfile, studentName = "Ar
   const generateEmail = async () => {
     setLoadingEmail(true);
     try {
-      const res = await fetch("/api/email", {
+      const res = await fetch(apiUrl("/api/email"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

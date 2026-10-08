@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { UploadCloud, FileText, Clipboard, ArrowRight, Sparkles, Loader2, Check } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { SAMPLE_RESUMES } from "../utils/sampleResumes";
+import { apiUrl } from "../utils/api";
 import type { StudentProfile } from "../types";
 
 interface ResumeUploaderProps {
@@ -112,7 +113,7 @@ export default function ResumeUploader({ onProfileParsed, onLoadingStateChange }
         return;
       }
 
-      const res = await fetch("/api/profile", {
+      const res = await fetch(apiUrl("/api/profile"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ textContent: textToSubmit }),

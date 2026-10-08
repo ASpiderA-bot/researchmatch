@@ -9,6 +9,7 @@ import ProfessorCard from "./components/ProfessorCard";
 import HackathonFinder from "./components/HackathonFinder";
 import type { StudentProfile, MatchResult, SearchResponse } from "./types";
 import { matchInstitute, matchesAnyTarget } from "../shared/utils/instituteMatcher";
+import { apiUrl } from "./utils/api";
 
 type WorkflowStep = "profile" | "target_institutes" | "results";
 type ActiveTab = "professors" | "hackathons";
@@ -68,7 +69,7 @@ export default function App() {
     setCurrentStage("Running secondary verification search for each candidate...");
 
     try {
-      const res = await fetch("/api/search", {
+      const res = await fetch(apiUrl("/api/search"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ studentProfile, targetInstitutes: institutesToQuery }),
